@@ -33,11 +33,11 @@ sub combine_overlap {
     require Array::OverlapFinder;
     require File::Slurper::Dash;
 
-    my %args;
+    my %args = @_;
     my @seqs;
-    for my $file (@{ $array{files} }) {
+    for my $file (@{ $args{files} }) {
         my $content = File::Slurper::Dash::read_text($file);
-        my @lines = split /^/m, $content;
+        chomp(my @lines = split /^/m, $content);
         push @seqs, \@lines;
     }
     my @combined_seq = Array::OverlapFinder::combine_overlap(@seqs);
